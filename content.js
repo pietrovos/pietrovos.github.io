@@ -72,8 +72,9 @@ window.CONTENT = {
       points: [
         "Carleton students plan each term by hand, cross-checking their degree audit, prerequisites and the timetable to find courses they can take without a clash.",
         "Smart Scheduler reads a student's degree audit and shows which courses they've completed and which they still need. It then works out which remaining courses the student has the prerequisites for, lets them pick from those, and generates all possible conflict-free timetables for that selection. Students can also block off times they don't want any classes, and the generated timetables work around them, flagging any course that can't fit.",
-        "Prerequisite rules are stored as trees in PostgreSQL, so nested AND/OR conditions, minimum grades and year standing can all be checked.",
-        "Courses a student can't take yet are listed with the reason, such as a missing prerequisite or a term the course isn't offered in."
+        "Instead of typing in their history, students upload the degree audit Carleton Central already produces, as HTML or PDF. The parser pulls out completed courses, grades and the requirements still open, and any course they can't take yet is listed with the reason.",
+        "Course titles, credits and descriptions are fetched from Carleton's online course calendar, and prerequisite rules are parsed into trees in PostgreSQL, so nested AND/OR conditions, minimum grades and year standing can all be checked.",
+        "Timetables are found with a backtracking search that adds one course's sections at a time and abandons any partial timetable the moment something clashes. Sections that meet at the same times count as one option, so each timetable shown is actually different."
       ]
     },
     {
