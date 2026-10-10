@@ -59,8 +59,8 @@ window.CONTENT = {
       points: [
         "During my own job search, applications, notes, interviews and resumes ended up spread across a spreadsheet and folders, and copying each posting in by hand was slow.",
         "I built a self-hosted tracker in Next.js, Prisma and SQLite with a Save to JobPilot bookmark button. Clicking it on a job posting reads the page already open in your browser and fills in the company, role, location and description. It works on LinkedIn, Indeed, Workday, Greenhouse, Lever, Ashby, Workable, SmartRecruiters and most company career pages, plus Canadian government job sites like Job Bank, GC Jobs, the City of Ottawa, Canada Post, the Bank of Canada and CSE.",
-        "A server that fetches any pasted URL can be pointed at internal addresses. The importer only allows public HTTPS pages, checks each redirect, rejects private addresses and pins the resolved IP before reading the page.",
-        "I wrote 53 backend tests on throwaway SQLite databases, covering ownership triggers and moving a guest's work into a new account, and tested the job-site parsers against 6 recorded API responses."
+        "Each application keeps its status history, notes in folders, interview rounds, emails and offer details together. A document library stores each resume once so it can be attached to many applications.",
+        "The dashboard shows applications as detailed cards, a compact list, or a board with a column per status, where dragging a card changes its status. Search, filters and grouping by the day you applied make any application quick to find."
       ]
     },
     {
