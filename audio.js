@@ -99,6 +99,8 @@
       requestAnimationFrame(step);
     },
     fadeId: 0,
+    lastHover: -Infinity,
+    hoverEl: null,
 
     // Pause everything while the visitor is somewhere else, and pick up where it left off.
     setAway(away) {
@@ -140,11 +142,20 @@
 
     play(name) {
       if (!this.started || this.muted || this.sfxVol <= 0) return;
+      // Sweeping the cursor across a menu would stack a chime per item, so skip
+      // hovers that come too close together and cut off the previous one.
+      if (name === "hover") {
+        const now = performance.now();
+        if (now - this.lastHover < 80) return;
+        this.lastHover = now;
+        this.hoverEl?.pause();
+      }
       const file = this.files.sfx[name];
       if (file) {
         const el = new Audio(file);
         el.volume = this.sfxVol;
         el.play().catch(() => {});
+        if (name === "hover") this.hoverEl = el;
         return;
       }
       const fn = this.synth[name];
