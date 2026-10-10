@@ -30,7 +30,7 @@
 
   const Audio_ = {
     ctx: null,
-    musicVol: 0.7,
+    musicVol: 0.5,
     sfxVol: 0.7,
     files: { music: null, sfx: {} },
     musicEl: null,
