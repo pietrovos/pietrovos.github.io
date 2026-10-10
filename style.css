@@ -350,10 +350,26 @@ h3 {
 }
 .journal-entry li, .map-detail li { margin-bottom: 0.45em; }
 .journal-entry .flourish { margin: 6px 0 10px; width: 220px; }
-.journal-entry .shot { display: block; margin-top: 18px; cursor: zoom-in; opacity: 0.35; transition: opacity 0.3s; }
-/* The picture is muted until hovered; the link around it dims it as a whole. */
-.journal-entry .shot img { display: block; width: 100%; height: auto; filter: saturate(0.6); transition: filter 0.3s; }
-.journal-entry .shot:hover, .journal-entry .shot:focus-visible { opacity: 1; }
+/* Side margins leave room for the glow inside the scrolling entry. */
+.journal-entry .shot {
+  display: block;
+  margin: 18px 12px 0;
+  border: 1px solid rgba(233, 238, 245, 0.4);
+  border-radius: 2px;
+  box-shadow: 0 0 10px var(--glow), 0 0 2px rgba(255, 255, 255, 0.5);
+  cursor: zoom-in;
+  opacity: 0.35;
+  transition: opacity 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+/* The picture is muted until hovered; the frame above dims it along with its glow. */
+.journal-entry .shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: saturate(0.6);
+  transition: filter 0.3s;
+}
+.journal-entry .shot:hover, .journal-entry .shot:focus-visible { opacity: 1; border-color: var(--ink); box-shadow: 0 0 14px var(--glow), 0 0 3px #fff; }
 .journal-entry .shot:hover img, .journal-entry .shot:focus-visible img { filter: none; }
 
 /* ---------- Screenshot viewer ---------- */
