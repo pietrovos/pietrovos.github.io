@@ -84,9 +84,11 @@ window.CONTENT = {
       stack: ["Java", "UDP", "Maven", "JUnit", "Swing"],
       url: "https://github.com/pietrovos/firefighting-drone-simulator",
       points: [
-        "Co-developed a distributed Java/UDP simulation; built the initial Scheduler and Fire Incident subsystems.",
-        "Completed fault recovery and reassignment for stuck, communication and nozzle faults, with JUnit coverage.",
-        "Built the live Swing dashboard and the configurable 20-drone demo with incident, telemetry, fault and metrics views."
+        "When fires break out across a region, a fleet of firefighting drones needs one coordinator deciding which drone goes where, and that plan has to keep working when a drone breaks down or its messages get lost.",
+        "The simulator runs three programs that talk over UDP, a network protocol that doesn't guarantee messages arrive. One reads fire reports from a scenario file, a scheduler assigns drones to each fire, and the drones fly out, drop water and report back their position, water, battery and fuel.",
+        "Drones can be made to fail mid-mission by getting stuck, dropping or garbling messages, or jamming their water nozzle. The scheduler notices a drone that has gone silent for too long, takes its fire back and sends another drone, and a nozzle stuck open grounds that drone for good.",
+        "Each drone carries 15 litres, but a large fire needs 30, so sending one drone per fire left big fires waiting for a second trip while most of the fleet sat idle. The scheduler now sends enough drones at once to cover the water a fire still needs, which cut the average time to put a fire out by 40% on a 50-fire, 20-drone scenario.",
+        "A live dashboard shows the map, each drone's state and supplies, active missions and fault countdowns, and one launcher starts the whole demo with as many drones as you ask for."
       ]
     }
   ],
