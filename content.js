@@ -44,7 +44,7 @@ window.CONTENT = {
       stack: ["TypeScript", "Next.js", "NestJS", "PostgreSQL"],
       url: "https://github.com/pietrovos/agency-project-management",
       points: [
-        "Agencies lose money when a project slowly grows beyond what was agreed (scope creep) and nobody can prove which version of a change the client approved, or when two people editing the same proposal overwrite each other.",
+        "Agencies lose money when a project slowly grows beyond what was agreed (scope creep) and nobody can prove which version of a change the client approved. Two people editing the same proposal can also overwrite each other's work.",
         "I built a multi-tenant SaaS in Next.js and NestJS, where many agencies share one app but each one's data stays private. Proposals are saved as immutable revisions and an approval is tied to the exact revision the client saw. If two people edit the same proposal, the second save is blocked and shows both versions side by side, much like a merge conflict in Git, so nobody's changes get silently overwritten.",
         "Adding an org filter to each query only works until someone forgets one, so I enforced isolation in Postgres with row-level security set per transaction. A query missing its filter still can't read another org's rows.",
         "My isolation test reads the route list from the running app, sends another org's IDs to 33 of its 39 endpoints, and compares hashes of that org's rows before and after."
