@@ -58,7 +58,7 @@ window.CONTENT = {
       url: "https://github.com/pietrovos/jobpilot",
       points: [
         "During my own job search, applications, notes, interviews and resumes ended up spread across a spreadsheet and folders, and copying each posting in by hand was slow.",
-        "I built a self-hosted tracker in Next.js, Prisma and SQLite. Pasting a posting link fills in the company, role, salary and description from Greenhouse, Lever, SmartRecruiters, Workable or Workday.",
+        "I built a self-hosted tracker in Next.js, Prisma and SQLite with a Save to JobPilot bookmark button. Clicking it on a job posting reads the page already open in your browser and fills in the company, role, location and description. It works on LinkedIn, Indeed, Workday, Greenhouse, Lever, Ashby, Workable, SmartRecruiters and most company career pages. A built-in job search also pulls postings from Canadian government boards like Job Bank and GC Jobs, plus the City of Ottawa, Canada Post, the Bank of Canada and CSE.",
         "A server that fetches any pasted URL can be pointed at internal addresses. The importer only allows public HTTPS pages, checks each redirect, rejects private addresses and pins the resolved IP before reading the page.",
         "I wrote 53 backend tests on throwaway SQLite databases, covering ownership triggers and moving a guest's work into a new account, and tested the job-site parsers against 6 recorded API responses."
       ]
