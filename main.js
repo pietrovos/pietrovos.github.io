@@ -76,7 +76,8 @@
       <li><button class="entry-btn" role="option" data-key="project:${p.id}" data-index="${i}">
         <span class="entry-glyph" aria-hidden="true"></span>${esc(p.name)}
       </button></li>`).join("");
-    $$(".entry-btn", list).forEach((btn) => btn.addEventListener("focus", () => showProject(+btn.dataset.index)));
+    // Hovering only highlights an entry; clicking it (or Enter/Space) opens it.
+    $$(".entry-btn", list).forEach((btn) => btn.addEventListener("click", () => showProject(+btn.dataset.index)));
     showProject(0, false);
   }
 

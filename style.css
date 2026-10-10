@@ -328,7 +328,8 @@ h3 {
   transition: background 0.3s, box-shadow 0.3s;
 }
 .entry-btn.seen .entry-glyph { background: var(--ink); border-color: var(--ink); box-shadow: 0 0 6px var(--glow); }
-.entry-btn.active, .entry-btn.selected {
+.entry-btn.selected { color: var(--ink); }
+.entry-btn.active {
   color: #fff;
   border-left-color: var(--ink);
   background: linear-gradient(90deg, rgba(200, 225, 255, 0.12), transparent);
