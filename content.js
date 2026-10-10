@@ -47,7 +47,7 @@ window.CONTENT = {
         "Agencies lose money when a project slowly grows beyond what was agreed (scope creep) and nobody can prove which version of a change the client approved. Two people editing the same proposal can also overwrite each other's work.",
         "I built a multi-tenant SaaS in Next.js and NestJS, where many agencies share one app but each one's data stays private. Proposals are saved as immutable revisions and an approval is tied to the exact revision the client saw. If two people edit the same proposal, the second save is blocked and shows both versions side by side, much like a merge conflict in Git, so nobody's changes get silently overwritten.",
         "Instead of trusting every piece of code to only ask for the right agency's data, the database itself enforces it with PostgreSQL row-level security, so one forgotten check can't expose another agency's projects.",
-        "My isolation test reads the route list from the running app, sends another org's IDs to 33 of its 39 endpoints, and compares hashes of that org's rows before and after."
+        "To test it, I sent requests to 21 parts of the app using another agency's IDs. With row-level security switched off, 9 of the 21 leaked or changed that agency's data; with it switched on, none did."
       ]
     },
     {
