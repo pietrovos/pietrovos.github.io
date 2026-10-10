@@ -20,7 +20,7 @@ window.CONTENT = {
       points: [
         "Support docs often include restricted pages like billing runbooks, and an AI reply that quotes one to an agent without access is a leak. A reply with no sources also can't be checked.",
         "I built a helpdesk where Claude drafts ticket replies from a knowledge base, with each claim linking to the passage it came from. Uploads go through a Celery pipeline that chunks, embeds and versions each document.",
-        "The hard part was keeping restricted text out of the prompt. I put the permission filter inside the hybrid search SQL (pgvector plus Postgres full-text, fused with RRF), so it runs before ranking and restricted chunks never reach the app.",
+        "Filtering results after the search still leaks through ranking, so I moved the permission filter inside the hybrid search SQL (pgvector plus Postgres full-text, fused with RRF), where it runs before ranking and restricted chunks never reach the app.",
         "In an offline run of my 35-question eval set it made the right answer-or-refuse call on 28 of 35 and refused 6 of 8 questions it shouldn't answer. Deleting the permission filter breaks 10 of 12 retrieval tests."
       ]
     },
@@ -33,7 +33,7 @@ window.CONTENT = {
       points: [
         "When two reps order the last units of a product at the same moment, a simple stock check can confirm both orders. A carrier request that times out and gets retried can also ship the same parcel twice.",
         "I built an order and inventory console in Spring Boot and Angular with stock reservations, an order state machine and a stock ledger that a Postgres trigger keeps append-only.",
-        "The hardest part was the race on the last unit. I replaced read-then-write logic with one conditional UPDATE backed by a CHECK constraint, and saved each carrier booking's idempotency key before the first attempt so retries return the original booking.",
+        "Two requests reading the same stock count can both see one unit left. I replaced that read-then-write logic with one conditional UPDATE backed by a CHECK constraint, and saved each carrier booking's idempotency key before the first attempt so retries return the original booking.",
         "Swapping my guarded reservation for a check-then-act version failed 48 of 50 concurrent races in my mutation check. The backend has 176 tests that run against real PostgreSQL in Testcontainers."
       ]
     },
@@ -46,7 +46,7 @@ window.CONTENT = {
       points: [
         "Agencies lose money on scope creep when nobody can prove which version of a change the client approved, or when two people editing the same proposal overwrite each other.",
         "I built a multi-tenant SaaS in Next.js and NestJS where proposals are saved as immutable revisions and an approval is tied to the exact revision the client saw. A stale edit gets a 409 and a field-by-field conflict view.",
-        "The hard part was tenant isolation. I enforced it in Postgres with row-level security set per transaction, so a query that forgets its org filter still can't read another org's rows.",
+        "Adding an org filter to each query only works until someone forgets one, so I enforced isolation in Postgres with row-level security set per transaction. A query missing its filter still can't read another org's rows.",
         "My isolation test reads the route list from the running app, sends another org's IDs to 33 of its 39 endpoints, and compares hashes of that org's rows before and after."
       ]
     },
@@ -59,7 +59,7 @@ window.CONTENT = {
       points: [
         "During my own job search, applications, notes, interviews and resumes ended up spread across a spreadsheet and folders, and copying each posting in by hand was slow.",
         "I built a self-hosted tracker in Next.js, Prisma and SQLite. Pasting a posting link fills in the company, role, salary and description from Greenhouse, Lever, SmartRecruiters, Workable or Workday.",
-        "The hard part was the importer, since it fetches whatever URL gets pasted. It only allows public HTTPS pages, checks each redirect, rejects private addresses and pins the resolved IP before reading the page.",
+        "A server that fetches any pasted URL can be pointed at internal addresses. The importer only allows public HTTPS pages, checks each redirect, rejects private addresses and pins the resolved IP before reading the page.",
         "I wrote 53 backend tests on throwaway SQLite databases, covering ownership triggers and moving a guest's work into a new account, and tested the job-site parsers against 6 recorded API responses."
       ]
     },
