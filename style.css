@@ -353,18 +353,23 @@ h3 {
 }
 .journal-entry li, .map-detail li { margin-bottom: 0.45em; }
 .journal-entry .flourish { margin: 6px 0 10px; width: 220px; }
-.journal-entry .shot { display: block; margin-top: 16px; }
+/* Side margins leave room for the glow inside the scrolling entry. */
+.journal-entry .shot { display: block; margin: 18px 12px 0; }
 .journal-entry .shot img {
   display: block;
   width: 100%;
   height: auto;
-  border: 1px solid var(--panel-edge);
+  border: 1px solid rgba(233, 238, 245, 0.55);
   border-radius: 2px;
-  box-shadow: 0 0 24px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px var(--glow), 0 0 2px rgba(255, 255, 255, 0.6);
   opacity: 0.92;
-  transition: opacity 0.2s, border-color 0.2s;
+  transition: opacity 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
-.journal-entry .shot:hover img { opacity: 1; border-color: var(--ink-faint); }
+.journal-entry .shot:hover img {
+  opacity: 1;
+  border-color: var(--ink);
+  box-shadow: 0 0 14px var(--glow), 0 0 3px #fff;
+}
 .stack { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
 .stack span {
   padding: 2px 10px;
