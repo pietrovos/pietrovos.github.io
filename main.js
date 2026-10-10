@@ -98,6 +98,7 @@
       ${p.url ? `<a class="link" href="${esc(p.url)}" target="_blank" rel="noopener">View on GitHub →</a>` : ""}
       ${(p.images || []).map((img) => `<a class="shot" href="${esc(img.src)}" target="_blank" rel="noopener"><img src="${esc(img.src)}" alt="${esc(img.alt)}" loading="lazy"></a>`).join("")}`;
     entry.scrollTop = 0;
+    entry.scrollTarget = null;
     entry.classList.add("reveal");
     if (mark) discover("project:" + p.id, 25);
   }
@@ -275,6 +276,38 @@
     if (current !== "title") go("menu", { sound: "back" });
   }
 
+  // In the journal, Right on a project opens it and moves into the entry, where
+  // Up/Down scroll it; Left goes back to the project list.
+  function journalKeys(e) {
+    const entry = $(".journal-entry");
+    const active = document.activeElement;
+    const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    if (active === entry) {
+      // On narrow screens the whole panel scrolls instead of the entry.
+      const scroller = entry.scrollHeight > entry.clientHeight ? entry : $(".journal");
+      const step = key === "ArrowDown" || key === "s" ? 120 : key === "ArrowUp" || key === "w" ? -120 : 0;
+      if (step) {
+        // Add to where an unfinished smooth scroll is heading, so quick presses all count.
+        const max = scroller.scrollHeight - scroller.clientHeight;
+        scroller.scrollTarget = Math.max(0, Math.min(max, (scroller.scrollTarget ?? scroller.scrollTop) + step));
+        scroller.scrollTo({ top: scroller.scrollTarget, behavior: "smooth" });
+        clearTimeout(scroller.scrollTimer);
+        scroller.scrollTimer = setTimeout(() => { scroller.scrollTarget = null; }, 500);
+      } else if (key === "ArrowLeft" || key === "a") $(".entry-btn.active")?.focus();
+      else if (key !== "ArrowRight" && key !== "d") return false;
+      e.preventDefault();
+      return true;
+    }
+    if (active?.matches(".entry-btn") && (key === "ArrowRight" || key === "d")) {
+      e.preventDefault();
+      if (!active.classList.contains("active")) showProject(+active.dataset.index);
+      entry.focus({ preventScroll: true });
+      audio.play("hover");
+      return true;
+    }
+    return false;
+  }
+
   document.addEventListener("keydown", (e) => {
     if ((e.key === "m" || e.key === "M") && !e.ctrlKey && !e.metaKey && !e.altKey) return toggleMute();
     if (current === "title") {
@@ -283,6 +316,7 @@
       return enter();
     }
     const tag = document.activeElement?.type;
+    if (current === "journal" && journalKeys(e)) return;
     switch (e.key) {
       case "ArrowDown": case "s": case "S":
         e.preventDefault(); moveFocus(1, "y"); break;
