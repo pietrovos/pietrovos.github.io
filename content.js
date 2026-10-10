@@ -136,6 +136,8 @@ window.CONTENT = {
 
   // Oldest first.
   experience: [
+    { id: "flyers", org: "Kanata Flyers", title: "Flyer Carrier and Delivery Assistant", when: "Summers 2015 – 2026", where: "Kanata, ON",
+      points: ["Delivered my own flyer routes in Bridlewood for this FlyerForce branch, averaging close to 500 flyers.", "Helped my dad, an area manager, truck flyer bundles to carriers all over Kanata.", "Took on more of the trucking during university when his back started giving him trouble."] },
     { id: "ubreakifix", org: "uBreakiFix", title: "Electronics Repair Technician", when: "June 2020 – September 2021", where: "Kanata, ON",
       points: ["Diagnosed and repaired hardware, software and connectivity faults.", "Tested every repair before returning devices to customers.", "Managed parts inventory and processed warranty repairs."] },
     { id: "carleton", org: "Carleton University", title: "Bachelor of Software Engineering", when: "Graduated July 2026", where: "Ottawa, ON",

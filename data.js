@@ -14,11 +14,12 @@
 
   // Map pin positions (% of the map area), oldest to newest along the path.
   const mapPins = {
-    ubreakifix: { x: 13, y: 62 },
-    carleton: { x: 50, y: 34 },
-    next: { x: 87, y: 56 },
+    flyers: { x: 11, y: 40 },
+    ubreakifix: { x: 34, y: 68 },
+    carleton: { x: 62, y: 32 },
+    next: { x: 88, y: 58 },
   };
-  const mapOrder = ["ubreakifix", "carleton", "next"];
+  const mapOrder = ["flyers", "ubreakifix", "carleton", "next"];
 
   window.PORTFOLIO = {
     projects: C.projects.map((p) => ({ ...p, lore: lore[p.id] || "" })),
