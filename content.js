@@ -68,12 +68,12 @@ window.CONTENT = {
       name: "Smart Scheduler",
       kind: "Carleton engineering capstone",
       stack: ["TypeScript", "PostgreSQL", "Prisma", "Express", "React"],
-      url: "https://github.com/pietrovos/carleton-smart-scheduler",
+      url: "https://github.com/SafiullahRattar/capstone-scheduler",
       points: [
-        "Carleton students plan each term by hand, checking their degree audit, course prerequisites and the timetable to find courses they can take without a clash.",
-        "In a four-person capstone group, I designed the PostgreSQL schema and Prisma models for a planner that reads a student's audit and builds conflict-free timetables.",
-        "The hard part was storing prerequisite rules with nested AND/OR conditions, minimum grades and year standing. I modeled them as trees of nodes and helped write the recursive checker that tells a student which requirement is missing.",
-        "The database holds prerequisite trees for 322 of 348 courses. Our 107 unit tests include parsing 16 simulated audits and comparing each one with the student history it was generated from."
+        "Carleton students plan each term by hand, cross-checking their degree audit, prerequisites and the timetable to find courses they can take without a clash.",
+        "The planner reads a student's audit, checks prerequisites and generates all possible combinations of conflict-free timetables for the courses they still need.",
+        "Prerequisite rules are stored as trees in PostgreSQL, so nested AND/OR conditions, minimum grades and year standing can all be checked.",
+        "Courses a student can't take yet are listed with the reason, such as a missing prerequisite or a term the course isn't offered in."
       ]
     },
     {
