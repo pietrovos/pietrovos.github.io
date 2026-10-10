@@ -71,7 +71,7 @@ window.CONTENT = {
       url: "https://github.com/SafiullahRattar/capstone-scheduler",
       points: [
         "Carleton students plan each term by hand, cross-checking their degree audit, prerequisites and the timetable to find courses they can take without a clash.",
-        "The planner reads a student's audit, checks prerequisites and generates all possible combinations of conflict-free timetables for the courses they still need.",
+        "Smart Scheduler reads a student's degree audit and shows which courses they've completed and which they still need. The student picks from the courses they have the prerequisites for, and it generates all possible conflict-free timetables for that selection.",
         "Prerequisite rules are stored as trees in PostgreSQL, so nested AND/OR conditions, minimum grades and year standing can all be checked.",
         "Courses a student can't take yet are listed with the reason, such as a missing prerequisite or a term the course isn't offered in."
       ]
