@@ -96,6 +96,7 @@
       <ul>${p.points.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
       <p class="stack">${p.stack.map((s) => `<span>${esc(s)}</span>`).join("")}</p>
       ${p.url ? `<a class="link" href="${esc(p.url)}" target="_blank" rel="noopener">View on GitHub →</a>` : ""}`;
+    entry.scrollTop = 0;
     entry.classList.add("reveal");
     if (mark) discover("project:" + p.id, 25);
   }

@@ -335,6 +335,17 @@ h3 {
   background: linear-gradient(90deg, rgba(200, 225, 255, 0.12), transparent);
   text-shadow: 0 0 10px var(--glow);
 }
+/* On wide screens the entry scrolls on its own, so the project list stays put. */
+@media (min-width: 761px) {
+  .journal { overflow: hidden; }
+  .journal-list, .journal-entry {
+    max-height: calc(100vh - 15rem - 52px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--ink-faint) transparent;
+  }
+  .journal-entry { padding-right: 10px; }
+}
 .journal-entry ul, .map-detail ul {
   padding-left: 1.1em;
   margin: 10px 0 14px;
