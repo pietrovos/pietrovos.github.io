@@ -354,7 +354,15 @@ h3 {
 .journal-entry li, .map-detail li { margin-bottom: 0.45em; }
 .journal-entry .flourish { margin: 6px 0 10px; width: 220px; }
 /* Side margins leave room for the glow inside the scrolling entry. */
-.journal-entry .shot { display: block; margin: 18px 12px 0; }
+.journal-entry .shot { position: relative; display: block; margin: 18px 12px 0; }
+/* Fades the picture's edges to black inside the glowing border. */
+.journal-entry .shot::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  pointer-events: none;
+  box-shadow: inset 0 0 32px 18px #000;
+}
 .journal-entry .shot img {
   display: block;
   width: 100%;
