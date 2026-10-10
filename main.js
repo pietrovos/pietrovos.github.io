@@ -243,6 +243,11 @@
     const el = e.target.closest("button, a");
     if (el && el !== document.activeElement && $("#" + current).contains(el)) el.focus({ preventScroll: true });
   });
+  // A screenshot lights up only while the cursor is on it.
+  document.addEventListener("mouseout", (e) => {
+    const shot = e.target.closest(".shot");
+    if (shot && shot === document.activeElement && !shot.contains(e.relatedTarget)) shot.blur();
+  });
 
   function moveFocus(dir, axis) {
     const screen = $("#" + current);

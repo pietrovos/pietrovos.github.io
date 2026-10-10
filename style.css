@@ -368,8 +368,8 @@ h3 {
   filter: saturate(0.6);
   transition: filter 0.3s;
 }
-.journal-entry .shot:hover, .journal-entry .shot.selected { opacity: 1; border-color: var(--ink); box-shadow: 0 0 14px var(--glow), 0 0 3px #fff; }
-.journal-entry .shot:hover img, .journal-entry .shot.selected img { filter: none; }
+.journal-entry .shot:hover, .journal-entry .shot:focus-visible { opacity: 1; border-color: var(--ink); box-shadow: 0 0 14px var(--glow), 0 0 3px #fff; }
+.journal-entry .shot:hover img, .journal-entry .shot:focus-visible img { filter: none; }
 .stack { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
 .stack span {
   padding: 2px 10px;
