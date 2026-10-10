@@ -17,6 +17,10 @@ window.CONTENT = {
       kind: "AI helpdesk with cited drafts",
       stack: ["Python", "FastAPI", "React", "PostgreSQL", "pgvector", "Celery", "S3", "Claude API"],
       url: "https://github.com/pietrovos/knowledge-base-helpdesk",
+      images: [
+        { src: "assets/projects/supportlens-draft.webp", alt: "A reply drafted from the help articles, with numbered citations to each source passage" },
+        { src: "assets/projects/supportlens-inbox.webp", alt: "The ticket inbox, most urgent tickets first" }
+      ],
       points: [
         "Some of a company's help docs are restricted to certain staff, like billing procedures. An AI writing a reply could pull from a page the person isn't allowed to see, and if the reply doesn't say where its answer came from, nobody can check it.",
         "I built a helpdesk where an AI model drafts ticket replies from a knowledge base, with each claim linking to the passage it came from. The model sits behind a provider interface (Claude by default), so a different one can be plugged in.",
@@ -30,6 +34,10 @@ window.CONTENT = {
       kind: "Order and inventory operations console",
       stack: ["Java 21", "Spring Boot", "PostgreSQL", "Angular", "Testcontainers", "Terraform"],
       url: "https://github.com/pietrovos/order-fulfillment-system",
+      images: [
+        { src: "assets/projects/fulfillops-dashboard.webp", alt: "The warehouse dashboard: stock exceptions, order pipeline, stock levels and recent activity" },
+        { src: "assets/projects/fulfillops-stock-exception.webp", alt: "An order held as a stock exception because only 4 of the 12 units ordered are available" }
+      ],
       points: [
         "When two reps order the last units of a product at the same moment, a simple stock check can confirm both orders. A carrier request that times out and gets retried can also ship the same parcel twice.",
         "I built an order and inventory console in Spring Boot and Angular with stock reservations, an order state machine and a stock ledger that a Postgres trigger keeps append-only.",
@@ -43,6 +51,10 @@ window.CONTENT = {
       kind: "Multi-tenant SaaS for agency scope changes",
       stack: ["TypeScript", "Next.js", "NestJS", "PostgreSQL"],
       url: "https://github.com/pietrovos/agency-project-management",
+      images: [
+        { src: "assets/projects/scopeflow-project.webp", alt: "A client project with milestones, budget, approved changes and proposed scope changes" },
+        { src: "assets/projects/scopeflow-conflict.webp", alt: "The conflict view shown when someone else revised a proposal first, comparing their revision with your draft" }
+      ],
       points: [
         "Agencies lose money when a project slowly grows beyond what was agreed (scope creep) and nobody can prove which version of a change the client approved. Two people editing the same proposal can also overwrite each other's work.",
         "I built a multi-tenant SaaS in Next.js and NestJS, where many agencies share one app but each one's data stays private. Proposals are saved as immutable revisions and an approval is tied to the exact revision the client saw. If two people edit the same proposal, the second save is blocked and shows both versions side by side, much like a merge conflict in Git, so nobody's changes get silently overwritten.",
@@ -56,6 +68,9 @@ window.CONTENT = {
       kind: "Job application tracker",
       stack: ["TypeScript", "Next.js", "React", "Prisma", "SQLite"],
       url: "https://github.com/pietrovos/jobpilot",
+      images: [
+        { src: "assets/projects/jobpilot-detail.webp", alt: "A saved job posting with its description and sections for details, notes, files, emails, interviews and history" }
+      ],
       points: [
         "During my own job search, applications, notes, interviews and resumes ended up spread across a spreadsheet and folders, and copying each posting in by hand was slow.",
         "I built a self-hosted tracker in Next.js, Prisma and SQLite with a Save to JobPilot bookmark button. Clicking it on a job posting reads the page already open in your browser and fills in the company, role, location and description. It works on LinkedIn, Indeed, Workday, Greenhouse, Lever, Ashby, Workable, SmartRecruiters and most company career pages, plus Canadian government job sites like Job Bank, GC Jobs, the City of Ottawa, Canada Post, the Bank of Canada and CSE.",
@@ -69,6 +84,10 @@ window.CONTENT = {
       kind: "Carleton engineering capstone",
       stack: ["TypeScript", "PostgreSQL", "Prisma", "Express", "React"],
       url: "https://github.com/SafiullahRattar/capstone-scheduler",
+      images: [
+        { src: "assets/projects/scheduler-degree-map.webp", alt: "The degree map built from a student's audit, grouping requirements still to meet by year" },
+        { src: "assets/projects/scheduler-timetable.webp", alt: "One of the generated conflict-free timetables, with elective options alongside" }
+      ],
       points: [
         "Carleton students plan each term by hand, cross-checking their degree audit, prerequisites and the timetable to find courses they can take without a clash.",
         "Smart Scheduler reads a student's degree audit and shows which courses they've completed and which they still need. It then works out which remaining courses the student has the prerequisites for, lets them pick from those, and generates all possible conflict-free timetables for that selection. Students can also block off times they don't want any classes, and the generated timetables work around them, flagging any course that can't fit.",
@@ -83,6 +102,9 @@ window.CONTENT = {
       kind: "Real-time control-system simulation",
       stack: ["Java", "UDP", "Maven", "JUnit", "Swing"],
       url: "https://github.com/pietrovos/firefighting-drone-simulator",
+      images: [
+        { src: "assets/projects/drones-dashboard.webp", alt: "The mission-control dashboard: the response map with fires and drones, and the fleet's state, water, battery and fuel" }
+      ],
       points: [
         "When fires break out across a region, a fleet of firefighting drones needs one coordinator deciding which drone goes where, and that plan has to keep working when a drone breaks down or its messages get lost.",
         "The simulator runs three programs that talk over UDP, a network protocol that doesn't guarantee messages arrive. One reads fire reports from a scenario file, a scheduler assigns drones to each fire, and the drones fly out, drop water and report back their position, water, battery and fuel.",
