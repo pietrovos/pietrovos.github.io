@@ -19,7 +19,7 @@ window.CONTENT = {
       url: "https://github.com/pietrovos/knowledge-base-helpdesk",
       points: [
         "Some of a company's help docs are restricted to certain staff, like billing procedures. An AI writing a reply could pull from a page the person isn't allowed to see, and if the reply doesn't say where its answer came from, nobody can check it.",
-        "I built a helpdesk where Claude drafts ticket replies from a knowledge base, with each claim linking to the passage it came from. Uploads go through a Celery pipeline that chunks, embeds and versions each document.",
+        "I built a helpdesk where an AI model drafts ticket replies from a knowledge base, with each claim linking to the passage it came from. The model sits behind a provider interface (Claude by default), so a different one can be plugged in.",
         "Filtering results after the search still leaks through ranking, so I moved the permission filter inside the hybrid search SQL (pgvector plus Postgres full-text, fused with RRF), where it runs before ranking and restricted chunks never reach the app.",
         "In an offline run of my 35-question eval set it made the right answer-or-refuse call on 28 of 35 and refused 6 of 8 questions it shouldn't answer. Deleting the permission filter breaks 10 of 12 retrieval tests."
       ]
