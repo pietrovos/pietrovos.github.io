@@ -135,6 +135,20 @@
   </button>
 
   <!-- Popup (e.g. "Copied") -->
+  <div id="viewer" class="viewer" role="dialog" aria-modal="true" aria-label="Screenshot" aria-hidden="true" tabindex="-1">
+    <figure>
+      <span class="top-fleur" aria-hidden="true"></span>
+      <svg class="flourish small" viewBox="0 0 600 60" aria-hidden="true"><use href="#flourish"/></svg>
+      <img alt="">
+      <figcaption>
+        <span class="viewer-title"></span>
+        <span class="viewer-desc"></span>
+        <span class="viewer-nav"><button class="viewer-prev" aria-label="Previous screenshot">‹</button><span class="viewer-count"></span><button class="viewer-next" aria-label="Next screenshot">›</button></span>
+        <span class="viewer-hint">Esc or click to close</span>
+      </figcaption>
+      <span class="bottom-fleur" aria-hidden="true"></span>
+    </figure>
+  </div>
   <div id="toast" role="status" aria-live="polite"></div>
 
   <!-- Shared ornament -->

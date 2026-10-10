@@ -81,8 +81,10 @@
     showProject(0, false);
   }
 
+  let shownProject = null;
   function showProject(i, mark = true) {
     const p = data.projects[i];
+    shownProject = p;
     $$(".entry-btn").forEach((b, k) => b.classList.toggle("active", k === i));
     const entry = $(".journal-entry");
     entry.classList.remove("reveal");
@@ -96,7 +98,7 @@
       <ul>${p.points.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
       <p class="stack">${p.stack.map((s) => `<span>${esc(s)}</span>`).join("")}</p>
       ${p.url ? `<a class="link" href="${esc(p.url)}" target="_blank" rel="noopener">View on GitHub →</a>` : ""}
-      ${(p.images || []).map((img) => `<a class="shot" href="${esc(img.src)}" target="_blank" rel="noopener"><img src="${esc(img.src)}" alt="${esc(img.alt)}" loading="lazy"></a>`).join("")}`;
+      ${(p.images || []).map((img, k) => `<a class="shot" data-shot="${k}" href="${esc(img.src)}" target="_blank" rel="noopener"><img src="${esc(img.src)}" alt="${esc(img.alt)}" loading="lazy"></a>`).join("")}`;
     entry.scrollTop = 0;
     entry.scrollTarget = null;
     entry.classList.add("reveal");
@@ -281,6 +283,50 @@
     if (current !== "title") go("menu", { sound: "back" });
   }
 
+  // ---------- Screenshot viewer ----------
+  const viewer = $("#viewer");
+  let viewing = null; // { images, index, name, returnTo }
+  function showShot(index) {
+    const { images, name } = viewing;
+    viewing.index = (index + images.length) % images.length;
+    const img = images[viewing.index];
+    $("img", viewer).src = img.src;
+    $("img", viewer).alt = img.alt;
+    $(".viewer-title", viewer).textContent = name;
+    $(".viewer-desc", viewer).textContent = img.alt;
+    $(".viewer-count", viewer).textContent = images.length > 1 ? `${viewing.index + 1} / ${images.length}` : "";
+    $$(".viewer-nav button", viewer).forEach((b) => { b.hidden = images.length < 2; });
+  }
+  function openViewer(project, index, returnTo) {
+    viewing = { images: project.images, name: project.name, returnTo };
+    showShot(index);
+    viewer.classList.add("open");
+    viewer.setAttribute("aria-hidden", "false");
+    quietFocus(viewer);
+    audio.play("confirm");
+  }
+  function closeViewer() {
+    viewer.classList.remove("open");
+    viewer.setAttribute("aria-hidden", "true");
+    quietFocus(viewing.returnTo);
+    viewing = null;
+    audio.play("back");
+  }
+  function stepViewer(dir) {
+    if (viewing.images.length < 2) return;
+    showShot(viewing.index + dir);
+    audio.play("hover");
+  }
+  function viewerKeys(e) {
+    const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    if (["Escape", "Backspace", "Enter", " "].includes(key)) closeViewer();
+    else if (key === "ArrowRight" || key === "d") stepViewer(1);
+    else if (key === "ArrowLeft" || key === "a") stepViewer(-1);
+    else if (key === "Tab") { /* keep focus inside the viewer */ }
+    else return;
+    e.preventDefault();
+  }
+
   // In the journal, Right on a project opens it and moves into the entry, where
   // Up/Down scroll it; Left goes back to the project list.
   function journalKeys(e) {
@@ -320,6 +366,7 @@
       e.preventDefault();
       return enter();
     }
+    if (viewing) return viewerKeys(e);
     const tag = document.activeElement?.type;
     if (current === "journal" && journalKeys(e)) return;
     switch (e.key) {
@@ -341,8 +388,18 @@
   document.addEventListener("click", (e) => {
     if (e.target.closest("#mute")) return toggleMute();
     if (current === "title") { e.preventDefault(); return enter(); }
+    if (viewing) {
+      if (e.target.closest(".viewer-prev")) stepViewer(-1);
+      else if (e.target.closest(".viewer-next")) stepViewer(1);
+      else if (e.target !== $("img", viewer)) closeViewer();
+      return;
+    }
     const el = e.target.closest("button, a");
     if (!el) return;
+    if (el.matches(".shot")) {
+      e.preventDefault();
+      return openViewer(shownProject, +el.dataset.shot, el);
+    }
     if (el.matches("[data-copy]")) return copyText(el.dataset.copy);
     // On narrow screens the detail sits below the list, so bring it into view.
     if (el.matches(".entry-btn, .charm") && matchMedia("(max-width: 760px)").matches) {

@@ -350,26 +350,65 @@ h3 {
 }
 .journal-entry li, .map-detail li { margin-bottom: 0.45em; }
 .journal-entry .flourish { margin: 6px 0 10px; width: 220px; }
-/* Side margins leave room for the glow inside the scrolling entry. */
-.journal-entry .shot {
-  display: block;
-  margin: 18px 12px 0;
-  border: 1px solid rgba(233, 238, 245, 0.4);
-  border-radius: 2px;
-  box-shadow: 0 0 10px var(--glow), 0 0 2px rgba(255, 255, 255, 0.5);
-  opacity: 0.35;
-  transition: opacity 0.3s, border-color 0.3s, box-shadow 0.3s;
-}
-/* The picture is muted until hovered; the frame above dims it along with its glow. */
-.journal-entry .shot img {
-  display: block;
-  width: 100%;
-  height: auto;
-  filter: saturate(0.6);
-  transition: filter 0.3s;
-}
-.journal-entry .shot:hover, .journal-entry .shot:focus-visible { opacity: 1; border-color: var(--ink); box-shadow: 0 0 14px var(--glow), 0 0 3px #fff; }
+.journal-entry .shot { display: block; margin-top: 18px; cursor: zoom-in; opacity: 0.35; transition: opacity 0.3s; }
+/* The picture is muted until hovered; the link around it dims it as a whole. */
+.journal-entry .shot img { display: block; width: 100%; height: auto; filter: saturate(0.6); transition: filter 0.3s; }
+.journal-entry .shot:hover, .journal-entry .shot:focus-visible { opacity: 1; }
 .journal-entry .shot:hover img, .journal-entry .shot:focus-visible img { filter: none; }
+
+/* ---------- Screenshot viewer ---------- */
+.viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3vh 16px;
+  background: radial-gradient(ellipse at center, rgba(3, 6, 12, 0.88) 35%, rgba(0, 0, 0, 0.97) 100%);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  cursor: zoom-out;
+}
+.viewer.open { opacity: 1; pointer-events: auto; }
+.viewer figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  max-width: min(1400px, 100%);
+  transform: scale(0.97);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.viewer.open figure { transform: none; }
+.viewer img {
+  display: block;
+  max-width: 100%;
+  max-height: 68vh;
+  margin: 8px 0 4px;
+  border: 1px solid var(--panel-edge);
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
+  cursor: default;
+}
+.viewer .flourish { width: min(300px, 60vw); margin: 0 auto; }
+.viewer figcaption { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+.viewer-title {
+  font-family: var(--display);
+  font-size: 1.2rem;
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 12px var(--glow);
+}
+.viewer-desc { max-width: 46rem; color: var(--ink-dim); font-style: italic; }
+.viewer-nav { display: flex; align-items: center; gap: 22px; margin-top: 6px; color: var(--ink-faint); font-size: 0.95rem; }
+.viewer-nav button { font-size: 1.4rem; padding: 0 10px; color: var(--ink-dim); cursor: pointer; transition: color 0.2s, text-shadow 0.2s; }
+.viewer-nav button:hover { color: #fff; text-shadow: 0 0 10px var(--glow); }
+.viewer-nav button[hidden] { display: none; }
+.viewer-hint { color: var(--ink-faint); font-size: 0.85rem; letter-spacing: 0.08em; }
+.hk-ui .viewer .flourish { display: none; }
+.hk-ui .viewer.open .top-fleur { animation: crown-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.hk-ui .viewer.open .bottom-fleur { animation: fleur-unfurl 0.6s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both; }
 .stack { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 14px; }
 .stack span {
   padding: 2px 10px;
