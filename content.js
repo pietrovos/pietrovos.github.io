@@ -33,7 +33,7 @@ window.CONTENT = {
       points: [
         "When two reps order the last units of a product at the same moment, a simple stock check can confirm both orders. A carrier request that times out and gets retried can also ship the same parcel twice.",
         "I built an order and inventory console in Spring Boot and Angular with stock reservations, an order state machine and a stock ledger that a Postgres trigger keeps append-only.",
-        "Two requests reading the same stock count can both see one unit left. I replaced that read-then-write logic with one conditional UPDATE backed by a CHECK constraint, and gave each carrier booking a unique request ID, saved before the first try, so a retried request gets back the original booking instead of creating a second one.",
+        "Two orders arriving at once could both see one unit left, a classic race condition. I replaced that read-then-write logic with one conditional UPDATE backed by a CHECK constraint, and gave each carrier booking a unique request ID, saved before the first try, so a retried request gets back the original booking instead of creating a second one.",
         "Swapping my guarded reservation for a check-then-act version failed 48 of 50 concurrent races in my mutation check. The backend has 176 tests that run against real PostgreSQL in Testcontainers."
       ]
     },
