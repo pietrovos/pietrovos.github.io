@@ -362,18 +362,11 @@ h3 {
   box-shadow: 0 0 10px var(--glow), 0 0 2px rgba(255, 255, 255, 0.5);
   transition: border-color 0.3s, box-shadow 0.3s;
 }
-/* The picture fades out toward its edges and stays dim, like a faded journal
-   plate, until it is hovered. */
+/* The picture stays dim, like a faded journal plate, until it is hovered. */
 .journal-entry .shot img {
   display: block;
   width: 100%;
   height: auto;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent),
-    linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
-  -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent),
-    linear-gradient(to bottom, transparent, #000 9%, #000 91%, transparent);
-  mask-composite: intersect;
   opacity: 0.5;
   filter: saturate(0.6);
   transition: opacity 0.3s, filter 0.3s;
