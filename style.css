@@ -399,15 +399,27 @@ h3 {
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .viewer.open figure { transform: none; }
+.viewer-stage {
+  position: relative;
+  overflow: hidden;
+  margin: 8px 0 4px;
+  border: 1px solid var(--panel-edge);
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
+  line-height: 0;
+  touch-action: none;
+}
 .viewer img {
   display: block;
   max-width: 100%;
   max-height: 68vh;
-  margin: 8px 0 4px;
-  border: 1px solid var(--panel-edge);
-  box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
-  cursor: default;
+  transform-origin: 0 0;
+  transition: transform 0.2s ease-out;
+  cursor: zoom-in;
+  user-select: none;
+  -webkit-user-drag: none;
 }
+.viewer.zoomed img { cursor: grab; }
+.viewer.dragging img { cursor: grabbing; transition: none; }
 .viewer .flourish { width: min(300px, 60vw); margin: 0 auto; }
 .viewer figcaption { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
 .viewer-title {

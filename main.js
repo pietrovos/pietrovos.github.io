@@ -296,7 +296,53 @@
     $(".viewer-desc", viewer).textContent = img.alt;
     $(".viewer-count", viewer).textContent = images.length > 1 ? `${viewing.index + 1} / ${images.length}` : "";
     $$(".viewer-nav button", viewer).forEach((b) => { b.hidden = images.length < 2; });
+    zoomTo(1);
   }
+
+  // Zoom: click or scroll on the picture, drag to pan, +/- and 0 on the keyboard.
+  const stage = $(".viewer-stage", viewer);
+  const zoom = { scale: 1, x: 0, y: 0, drag: null, dragged: false };
+  function applyZoom() {
+    const w = stage.clientWidth, h = stage.clientHeight;
+    // Keep the picture covering the frame so no empty space shows at the edges.
+    zoom.x = Math.min(0, Math.max(w - w * zoom.scale, zoom.x));
+    zoom.y = Math.min(0, Math.max(h - h * zoom.scale, zoom.y));
+    $("img", viewer).style.transform = `translate(${zoom.x}px, ${zoom.y}px) scale(${zoom.scale})`;
+    viewer.classList.toggle("zoomed", zoom.scale > 1);
+  }
+  // Zoom around a point in the frame (default: its centre) so that point stays put.
+  function zoomTo(scale, px = stage.clientWidth / 2, py = stage.clientHeight / 2) {
+    scale = Math.min(4, Math.max(1, scale));
+    zoom.x = px - ((px - zoom.x) * scale) / zoom.scale;
+    zoom.y = py - ((py - zoom.y) * scale) / zoom.scale;
+    zoom.scale = scale;
+    applyZoom();
+  }
+  const stagePoint = (e) => { const r = stage.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+  stage.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    zoomTo(zoom.scale * Math.exp(-e.deltaY * 0.0015), ...stagePoint(e));
+  }, { passive: false });
+  stage.addEventListener("pointerdown", (e) => {
+    zoom.dragged = false;
+    if (zoom.scale === 1) return;
+    zoom.drag = { x: e.clientX, y: e.clientY };
+    stage.setPointerCapture(e.pointerId);
+  });
+  stage.addEventListener("pointermove", (e) => {
+    if (!zoom.drag) return;
+    const dx = e.clientX - zoom.drag.x, dy = e.clientY - zoom.drag.y;
+    if (!zoom.dragged && Math.hypot(dx, dy) < 4) return;
+    zoom.dragged = true;
+    viewer.classList.add("dragging");
+    zoom.x += dx;
+    zoom.y += dy;
+    zoom.drag = { x: e.clientX, y: e.clientY };
+    applyZoom();
+  });
+  const endDrag = () => { zoom.drag = null; viewer.classList.remove("dragging"); };
+  stage.addEventListener("pointerup", endDrag);
+  stage.addEventListener("pointercancel", endDrag);
   function openViewer(project, index, returnTo) {
     viewing = { images: project.images, name: project.name, returnTo };
     showShot(index);
@@ -320,6 +366,9 @@
   function viewerKeys(e) {
     const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
     if (["Escape", "Backspace", "Enter", " "].includes(key)) closeViewer();
+    else if (key === "+" || key === "=") zoomTo(zoom.scale * 1.5);
+    else if (key === "-" || key === "_") zoomTo(zoom.scale / 1.5);
+    else if (key === "0") zoomTo(1);
     else if (key === "ArrowRight" || key === "d") stepViewer(1);
     else if (key === "ArrowLeft" || key === "a") stepViewer(-1);
     else if (key === "Tab") { /* keep focus inside the viewer */ }
@@ -391,7 +440,9 @@
     if (viewing) {
       if (e.target.closest(".viewer-prev")) stepViewer(-1);
       else if (e.target.closest(".viewer-next")) stepViewer(1);
-      else if (e.target !== $("img", viewer)) closeViewer();
+      else if (zoom.dragged) zoom.dragged = false; // the end of a pan, not a click
+      else if (e.target.closest(".viewer-stage")) zoomTo(zoom.scale > 1 ? 1 : 2.5, ...stagePoint(e));
+      else closeViewer();
       return;
     }
     const el = e.target.closest("button, a");
